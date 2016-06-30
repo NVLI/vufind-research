@@ -1,0 +1,12 @@
+# Define the menu links for this module
+
+entity.solr_annotation.collection:
+  title: 'Solr Annotations Listing'
+  route_name: entity.solr_annotation.collection
+  description: 'List Solr Annotations'
+  weight: 10
+solr_annotation.admin.structure.settings:
+  title: Solr Annotation Settings
+  description: 'Configure Solr Annotation entity'
+  route_name:  custom_solr_annotation.solr_annotation_settings
+  parent: system.admin_structure

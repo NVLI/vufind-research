@@ -1,0 +1,64 @@
+# This file brings everything together. Very nifty!
+
+# Route name can be used in several place (links, redirects, local actions etc.)
+entity.solr_annotation.canonical:
+  path: '/solr_annotation/{solr_annotation}'
+  defaults:
+  # Calls the view controller, defined in the annotation of the solr annotation entity
+    _entity_view: 'solr_annotation'
+    _title: 'Solr Annotation Content'
+  requirements:
+  # Calls the access controller of the entity, $operation 'view'
+    _entity_access: 'solr_annotation.view'
+
+entity.solr_annotation.collection:
+  path: '/solr_annotation/list'
+  defaults:
+  # Calls the list controller, defined in the annotation of the solr annotation entity.
+    _entity_list: 'solr_annotation'
+    _title: 'Solr Annotation List'
+  requirements:
+  # Checks for permission directly.
+    _permission: 'view solr annotation entity'
+
+entity.solr_annotation.add_form:
+  path: '/solr_annotation/add'
+  defaults:
+  # Calls the form.add controller, defined in the solr annotation entity.
+    _entity_form: solr_annotation.add
+    _title: 'Add Solr Annotation'
+  requirements:
+    _entity_create_access: 'solr_annotation'
+
+entity.solr_annotation.edit_form:
+  path: '/solr_annotation/{solr_annotation}/edit'
+  defaults:
+  # Calls the form.edit controller, defined in the solr annotation entity.
+    _entity_form: solr_annotation.edit
+    _title: 'Edit Solr Annotation'
+  requirements:
+    _entity_access: 'solr_annotation.edit'
+
+entity.solr_annotation.delete_form:
+  path: '/solr_annotation/{solr_annotation}/delete'
+  defaults:
+    # Calls the form.delete controller, defined in the solr annotation entity.
+    _entity_form: solr_annotation.delete
+    _title: 'Delete Solr Annotation'
+  requirements:
+    _entity_access: 'solr_annotation.delete'
+
+custom_solr_annotation.solr_annotation_settings:
+  path: 'admin/structure/solr_annotation_settings'
+  defaults:
+    _form: '\Drupal\custom_solr_annotation\Form\SolrAnnotationSettingsForm'
+    _title: 'Solr Annotation Settings'
+  requirements:
+    _permission: 'administer solr annotation entity'
+
+custom_solr_annotation.add_annotation:
+  path: 'add/annotation/{id}/{server}/{keyword}'
+  defaults:
+    _form: 'Drupal\custom_solr_annotation\Form\AddAnnotationForm'
+  requirements:
+    _permission: 'access content'

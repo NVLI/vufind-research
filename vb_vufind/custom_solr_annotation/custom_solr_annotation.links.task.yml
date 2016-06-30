@@ -1,0 +1,22 @@
+# Define the 'local' links for the module
+
+custom_solr_annotation.settings_tab:
+  route_name: custom_solr_annotation.solr_annotation_settings
+  title: Settings
+  base_route: custom_solr_annotation.solr_annotation_settings
+
+custom_solr_annotation.view:
+  route_name: entity.solr_annotation.canonical
+  base_route: entity.solr_annotation.canonical
+  title: View
+
+custom_solr_annotation.page_edit:
+  route_name: entity.solr_annotation.edit_form
+  base_route: entity.solr_annotation.canonical
+  title: Edit
+
+custom_solr_annotation.delete_confirm:
+  route_name:  entity.solr_annotation.delete_form
+  base_route:  entity.solr_annotation.canonical
+  title: Delete
+  weight: 10

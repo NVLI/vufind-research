@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains custom_solr_annotation.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function custom_solr_annotation_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the custom_solr_annotation module.
+    case 'help.page.custom_solr_annotation':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Module to create custom solr annotation.') . '</p>';
+      return $output;
+
+    default:
+  }
+}

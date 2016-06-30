@@ -1,0 +1,7 @@
+name: custom_solr_annotation
+type: module
+description: Module to create custom solr annotation.
+core: 8.x
+package: Custom
+dependencies:
+  - custom_solr_search

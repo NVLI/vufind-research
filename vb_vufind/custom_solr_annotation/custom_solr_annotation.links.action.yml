@@ -1,0 +1,11 @@
+# All action links for this module
+
+custom_solr_annotation.solr_annotation_add:
+  # Which route will be called by the link
+  route_name: entity.solr_annotation.add_form
+  title: 'Add Solr Annotation'
+
+  # Where will the link appear, defined by route name.
+  appears_on:
+    - entity.solr_annotation.collection
+    - entity.solr_annotation.canonical
