@@ -28,7 +28,9 @@ class AddAnnotationService implements AddAnnotationServiceInterface {
     $doc = $update->createDocument();
     $doc->setKey('id');
     $doc->setField('id', $id);
-    $doc->setFields($fields);
+    foreach ($fields as $key => $field){
+      $doc->setField($key, $field, null, 'add');
+    }
     $update->addDocuments(array($doc));
     $update->addCommit(TRUE);
     $result = $client->update($update);
