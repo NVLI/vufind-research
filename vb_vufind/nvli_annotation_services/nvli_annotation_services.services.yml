@@ -1,0 +1,9 @@
+services:
+  nvli_annotation_services.create_entity:
+    class: Drupal\nvli_annotation_services\CreateEntityService
+    arguments: []
+
+  nvli_annotation_services.add_annotation:
+    class: Drupal\nvli_annotation_services\AddAnnotationService
+    arguments: []
+
