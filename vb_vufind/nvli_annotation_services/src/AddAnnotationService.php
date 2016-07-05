@@ -25,7 +25,6 @@ class AddAnnotationService implements AddAnnotationServiceInterface {
     // get an update query instance
     $update = $client->createUpdate();
     // create a new document for the data
-//    ep($fields);exit;
     $doc = $update->createDocument();
     $doc->setKey('id');
     $doc->setField('id', $id);
@@ -35,7 +34,6 @@ class AddAnnotationService implements AddAnnotationServiceInterface {
     $update->addDocuments(array($doc));
     $update->addCommit(TRUE);
     $result = $client->update($update);
-//ep($result);exit;
     return $result;
   }
 

@@ -6,7 +6,6 @@ namespace Drupal\nvli_annotation_services;
 class UpdateAnnotation {
 
   public static function updateAnnotation($type, $entities, &$context){
-//    ep($entities);exit;
     $message = 'Adding annotation...';
 
     foreach ($entities as $entity) {
