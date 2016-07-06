@@ -11,11 +11,11 @@
                     <xsl:value-of select="//identifier"/>
                 </value>
             </solr_doc_id>
-            <annotation>
+            <field_title>
                 <value>
                     <xsl:value-of select="//dc:title[normalize-space()]"/>
                 </value>
-            </annotation>
+            </field_title>
         </request>
     </xsl:template>
 </xsl:stylesheet>
