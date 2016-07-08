@@ -1,0 +1,9 @@
+name: NVLI Harvest Importer
+type: module
+description: NVLI Importer to pull the harvested data
+core: 8.x
+package: NVLI
+dependencies:
+  - migrate_source_csv
+  - migrate_plus
+  - migrate_tools
