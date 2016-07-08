@@ -20,6 +20,11 @@ class AddAnnotationService implements AddAnnotationServiceInterface {
 
   public function addAnnotation($server, $id, $fields){
     $backend_config = \Drupal::config('search_api.server.' . $server)->get('backend_config');
+    $old_doc = \Drupal::service('custom_solr_search.search')->basicSearch('id:'.$id, 0, 1, $server);
+    
+    if(in_array($fields['annotation'][0], $old_doc[0]->annotation, TRUE)){
+      return '';
+    }
     $client = new Client();
     $client->createEndpoint($backend_config + ['key' => 'core'], TRUE);
     // get an update query instance

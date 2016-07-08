@@ -3,6 +3,7 @@
 namespace Drupal\nvli_annotation_services\Form;
 
 
+use Drupal\Core\Entity\Entity;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\wizard\WizardPluginBase;

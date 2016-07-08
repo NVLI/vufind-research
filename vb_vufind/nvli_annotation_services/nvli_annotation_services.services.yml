@@ -7,3 +7,7 @@ services:
     class: Drupal\nvli_annotation_services\AddAnnotationService
     arguments: []
 
+  nvli_annotation_services.entity_type_field:
+    class: Drupal\nvli_annotation_services\EntityTypeFieldService
+    arguments: []
+

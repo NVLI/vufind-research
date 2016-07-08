@@ -38,6 +38,7 @@ class UpdateAnnotation {
     else {
       $message = t('Finished with an error.');
     }
+//    ep($results);exit;
     drupal_set_message($message);
   }
 }
