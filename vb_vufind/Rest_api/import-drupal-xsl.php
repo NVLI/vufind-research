@@ -75,22 +75,23 @@ foreach ($oai_pmh_list as $oai_pmh) {
       echo "cURL Error #:" . $err;
     }
     $response = simplexml_load_string($response);
-    $response_item = $response->item;
     $file = fopen($oai_pmh_dir . '/drupal-harvest-export.log', 'a+');
-    foreach ($response_item  as $item) {
+    $processed_ids = array();
+    foreach ($response  as $item) {
       $processed_ids[] = $item->solr_doc_id;
       fputs($file, $item->solr_doc_id . PHP_EOL);
     }
   }
   else {
     $file = fopen($oai_pmh_dir . '/drupal-harvest-export.log', 'a+');
-    $processed_ids = file_get_contents(__DIR__ . '/drupal-harvest-export.log');
+    $processed_ids = file_get_contents($oai_pmh_dir . '/drupal-harvest-export.log');
     $processed_ids = explode(PHP_EOL, $processed_ids);
   }
 
   // Get xml template to post from xml data using xsl.
   $xslDoc = new DOMDocument();
   $xslDoc->load(__DIR__ . "/drupal-dspace.xsl");
+  $i = 0;
   foreach ($harvested_files as $oai_dc) {
     $xmlDoc = new DOMDocument();
     $xmlDoc->load($oai_dc);
@@ -98,8 +99,9 @@ foreach ($oai_pmh_list as $oai_pmh) {
     $proc = new XSLTProcessor();
     $proc->importStylesheet($xslDoc);
     $input_xml = $proc->transformToXml($xmlDoc);
+    $cur_solr_doc_id = (array) simplexml_load_string($input_xml)->solr_doc_id->value;
 
-    if (!in_array($input_xml->solr_doc_id->value, $processed_ids)) {
+    if (!in_array($cur_solr_doc_id[0], $processed_ids)) {
       // Post it using curl.
       $curl = curl_init();
 
@@ -130,9 +132,10 @@ foreach ($oai_pmh_list as $oai_pmh) {
         exit;
       }
       else {
-        echo $response;
-        fputs($file, $id . PHP_EOL);
+        echo 'Created entity for solr_doc_id: ' . $cur_solr_doc_id[0] . ' in ' . $oai_pmh_dir . PHP_EOL;
+        fputs($file, $cur_solr_doc_id[0] . PHP_EOL);
       }
+      if($i == 9) {exit;} $i++;
     }
   }
 }
