@@ -1,0 +1,12 @@
+# Define the menu links for this module
+
+entity.nvli_resource_annotation.collection:
+  title: 'NVLI Resource Annotations Listing'
+  route_name: entity.nvli_resource_annotation.collection
+  description: 'List NVLI Resource Annotations'
+  weight: 10
+nvli_resource_annotation.admin.structure.settings:
+  title: NVLI Resource Annotation Settings
+  description: 'Configure NVLI Resource Annotation entity'
+  route_name:  nvli_resource.nvli_resource_annotation_settings
+  parent: system.admin_structure

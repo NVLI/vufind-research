@@ -1,6 +1,7 @@
 <?php
 
 namespace Drupal\nvli_annotation_services;
+
 use Solarium\Client;
 
 
@@ -18,12 +19,17 @@ class AddAnnotationService implements AddAnnotationServiceInterface {
 
   }
 
-  public function addAnnotation($server, $id, $fields){
-    $backend_config = \Drupal::config('search_api.server.' . $server)->get('backend_config');
-    $old_doc = \Drupal::service('custom_solr_search.search')->basicSearch('id:'.$id, 0, 1, $server);
-    
-    if(in_array($fields['annotation'][0], $old_doc[0]->annotation, TRUE)){
-      return '';
+  public function addAnnotation($server, $id, $fields) {
+    $backend_config = \Drupal::config('search_api.server.' . $server)
+      ->get('backend_config');
+    $old_doc = \Drupal::service('custom_solr_search.search')
+      ->basicSearch('id:' . $id, 0, 1, $server);
+
+    foreach ($fields as $key => $value) {
+      $diff = array_diff($value, $old_doc[0]->$key);
+      if ($diff) {
+        $addFields[$key] = $diff;
+      }
     }
     $client = new Client();
     $client->createEndpoint($backend_config + ['key' => 'core'], TRUE);
@@ -33,8 +39,8 @@ class AddAnnotationService implements AddAnnotationServiceInterface {
     $doc = $update->createDocument();
     $doc->setKey('id');
     $doc->setField('id', $id);
-    foreach ($fields as $key => $field){
-      $doc->setField($key, $field, null, 'add');
+    foreach ($addFields as $key => $field) {
+      $doc->setField($key, $field, NULL, 'add');
     }
     $update->addDocuments(array($doc));
     $update->addCommit(TRUE);

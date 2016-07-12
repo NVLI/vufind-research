@@ -1,0 +1,11 @@
+# All action links for this module
+
+nvli_resource.nvli_resource_annotation_add:
+  # Which route will be called by the link
+  route_name: entity.nvli_resource_annotation.add_form
+  title: 'Add NVLI Resource Annotation'
+
+  # Where will the link appear, defined by route name.
+  appears_on:
+    - entity.nvli_resource_annotation.collection
+    - entity.nvli_resource_annotation.canonical

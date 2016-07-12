@@ -1,0 +1,57 @@
+# This file brings everything together. Very nifty!
+
+# Route name can be used in several place (links, redirects, local actions etc.)
+entity.nvli_resource_annotation.canonical:
+  path: '/nvli_resource_annotation/{nvli_resource_annotation}'
+  defaults:
+  # Calls the view controller, defined in the annotation of the solr annotation entity
+    _entity_view: 'nvli_resource_annotation'
+    _title: 'NVLI Resource Annotation Content'
+  requirements:
+  # Calls the access controller of the entity, $operation 'view'
+    _entity_access: 'nvli_resource_annotation.view'
+
+entity.nvli_resource_annotation.collection:
+  path: '/nvli_resource_annotation/list'
+  defaults:
+  # Calls the list controller, defined in the annotation of the solr annotation entity.
+    _entity_list: 'nvli_resource_annotation'
+    _title: 'NVLI Resource Annotation List'
+  requirements:
+  # Checks for permission directly.
+    _permission: 'view NVLI Resource annotation entity'
+
+entity.nvli_resource_annotation.add_form:
+  path: '/nvli_resource_annotation/add'
+  defaults:
+  # Calls the form.add controller, defined in the solr annotation entity.
+    _entity_form: nvli_resource_annotation.add
+    _title: 'Add NVLI Resource Annotation'
+  requirements:
+    _entity_create_access: 'nvli_resource_annotation'
+
+entity.nvli_resource_annotation.edit_form:
+  path: '/nvli_resource_annotation/{nvli_resource_annotation}/edit'
+  defaults:
+  # Calls the form.edit controller, defined in the solr annotation entity.
+    _entity_form: nvli_resource_annotation.edit
+    _title: 'Edit NVLI Resource Annotation'
+  requirements:
+    _entity_access: 'nvli_resource_annotation.edit'
+
+entity.nvli_resource_annotation.delete_form:
+  path: '/nvli_resource_annotation/{nvli_resource_annotation}/delete'
+  defaults:
+    # Calls the form.delete controller, defined in the solr annotation entity.
+    _entity_form: nvli_resource_annotation.delete
+    _title: 'Delete NVLI Resource Annotation'
+  requirements:
+    _entity_access: 'nvli_resource_annotation.delete'
+
+nvli_resource.nvli_resource_annotation_settings:
+  path: 'admin/structure/nvli_resource_annotation_settings'
+  defaults:
+    _form: '\Drupal\nvli_resource\Form\NvliResourceAnnotationSettingsForm'
+    _title: 'NVLI Resource Annotation Settings'
+  requirements:
+    _permission: 'administer nvli resource annotation entity'

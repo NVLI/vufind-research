@@ -95,33 +95,39 @@ class AddAnnotationRestResource extends ResourceBase {
 
   protected function load_entity_range($offset, $limit) {
     $connection = Database::getConnection();
-    $query = $connection->select('solr_annotation', 'sa')
-      ->fields('sa', array('id'))
+    $query = $connection->select('nvli_resource_annotation', 'ra')
+      ->fields('ra', array('id'))
       ->range($offset, $limit);
     $ids = $query->execute()->fetchCol();
     $entities = \Drupal::entityTypeManager()
-      ->getStorage('solr_annotation')
+      ->getStorage('nvli_resource_annotation')
       ->loadMultiple($ids);
-    $success = $fail = $exist= 0;
+//    ep($entities);
+//    exit;
+    $success = $fail = $exist = 0;
     foreach ($entities as $entity) {
+      $ann_refs = $entity->referencedEntities();
+      foreach ($ann_refs as $ann_ref) {
+        $annotation['key'][] = $ann_ref->id();
+        $annotation['val'][] = $ann_ref->get('annotation')->value;
+      }
+
       $server = 'solr';//isset($entity->get('server')->value)?$entity->get('server')->value: 'solr';
       $id = $entity->get('solr_doc_id')->value;
-      $annotation = array();
       $fields = array();
-      foreach ($entity->toArray()['annotation'] as $val) {
-        $annotation[] = $val['value'];
-      }
-      $fields['annotation'] = $annotation;
 
+      $fields['annotation_key_txt_mv'] = $annotation['key'];
+      $fields['annotation_txt_mv'] = $annotation['val'];
       $results = \Drupal::service('nvli_annotation_services.add_annotation')
         ->addAnnotation($server, $id, $fields);
-      if($results){
+      if ($results) {
         $message = $results->getResponse()->getStatusMessage();
       }
 
       if ($message == 'OK') {
         $success++;
-      }elseif (empty($results)){
+      }
+      elseif (empty($results)) {
         $exist++;
       }
       else {

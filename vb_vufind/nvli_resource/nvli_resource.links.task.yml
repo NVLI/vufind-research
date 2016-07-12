@@ -1,0 +1,22 @@
+# Define the 'local' links for the module
+
+nvli_resource.settings_tab:
+  route_name: nvli_resource.nvli_resource_annotation_settings
+  title: Settings
+  base_route: nvli_resource.nvli_resource_annotation_settings
+
+nvli_resource.view:
+  route_name: entity.nvli_resource_annotation.canonical
+  base_route: entity.nvli_resource_annotation.canonical
+  title: View
+
+nvli_resource.page_edit:
+  route_name: entity.nvli_resource_annotation.edit_form
+  base_route: entity.nvli_resource_annotation.canonical
+  title: Edit
+
+nvli_resource.delete_confirm:
+  route_name:  entity.nvli_resource_annotation.delete_form
+  base_route:  entity.nvli_resource_annotation.canonical
+  title: Delete
+  weight: 10
