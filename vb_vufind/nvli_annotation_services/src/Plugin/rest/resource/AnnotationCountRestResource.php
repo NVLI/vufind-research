@@ -80,14 +80,13 @@ class AnnotationCountRestResource extends ResourceBase {
    *   Throws exception expected.
    */
   public function get() {
-
     // You must to implement the logic of your REST Resource here.
     // Use current user after pass authentication to validate access.
     if (!$this->currentUser->hasPermission('access content')) {
       throw new AccessDeniedHttpException();
     }
     $entities = \Drupal::entityTypeManager()
-      ->getStorage('nvli_resource_annotation')
+      ->getStorage('nvli_resource_entity')
       ->loadMultiple();
     $count = count($entities);
     return new ResourceResponse($count);

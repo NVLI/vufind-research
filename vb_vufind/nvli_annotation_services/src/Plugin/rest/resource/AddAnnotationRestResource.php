@@ -95,29 +95,34 @@ class AddAnnotationRestResource extends ResourceBase {
 
   protected function load_entity_range($offset, $limit) {
     $connection = Database::getConnection();
-    $query = $connection->select('nvli_resource_annotation', 'ra')
-      ->fields('ra', array('id'))
+
+    $query = $connection->select('nvli_resource_entity', 'nr')
+      ->fields('nr', array('id', 'solr_doc_id'))
       ->range($offset, $limit);
-    $ids = $query->execute()->fetchCol();
-    $entities = \Drupal::entityTypeManager()
-      ->getStorage('nvli_resource_annotation')
-      ->loadMultiple($ids);
-//    ep($entities);
-//    exit;
+    $reccords = $query->execute()->fetchAll();
+
     $success = $fail = $exist = 0;
-    foreach ($entities as $entity) {
-      $ann_refs = $entity->referencedEntities();
-      foreach ($ann_refs as $ann_ref) {
-        $annotation['key'][] = $ann_ref->id();
-        $annotation['val'][] = $ann_ref->get('annotation')->value;
+    $message = '';
+    foreach ($reccords as $reccord){
+      $server = 'solr';//isset($entity->get('server')->value)?$entity->get('server')->value: 'solr';
+      $id = $reccord->solr_doc_id;
+      $fields = array();
+      $query = $connection->select('annotation_store_entity', 'ae')
+        ->fields('ae', array('id'));
+       $query->condition('resource_ref', $reccord->id);
+      $data = $query->execute()->fetchAll();
+      foreach ($data as $val){
+        $value[] = $val->id;
       }
 
-      $server = 'solr';//isset($entity->get('server')->value)?$entity->get('server')->value: 'solr';
-      $id = $entity->get('solr_doc_id')->value;
-      $fields = array();
-
-      $fields['annotation_key_txt_mv'] = $annotation['key'];
-      $fields['annotation_txt_mv'] = $annotation['val'];
+      $entities = \Drupal::entityTypeManager()
+        ->getStorage('annotation_store_entity')
+        ->loadMultiple($value);
+      foreach ($entities as $entity){
+        $fields['annotation_key_txt_mv'][] = $entity->id();
+        $fields['annotation_txt_mv'][] = $entity->title->value;
+        $fields['annotation_type_txt_mv'][] = $entity->type->value;
+      }
       $results = \Drupal::service('nvli_annotation_services.add_annotation')
         ->addAnnotation($server, $id, $fields);
       if ($results) {

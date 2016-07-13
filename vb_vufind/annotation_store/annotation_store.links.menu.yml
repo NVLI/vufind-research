@@ -8,5 +8,5 @@ entity.annotation_store_entity.collection:
 annotation_store_entity.admin.structure.settings:
   title: NVLI Resource Annotation Settings
   description: 'Configure Annotation Store entity'
-  route_name:  nvli_resource.annotation_store_entity_settings
+  route_name:  annotation_store.annotation_store_entity_settings
   parent: system.admin_structure
