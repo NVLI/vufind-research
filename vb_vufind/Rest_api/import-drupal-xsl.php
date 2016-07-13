@@ -53,7 +53,7 @@ foreach ($oai_pmh_list as $oai_pmh) {
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-      CURLOPT_URL => "$nvli_drupal_host/nvli/sor_annotation_doc_ids",
+      CURLOPT_URL => "$nvli_drupal_host/nvli/resource_ids",
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
       CURLOPT_MAXREDIRS => 10,
@@ -90,7 +90,7 @@ foreach ($oai_pmh_list as $oai_pmh) {
 
   // Get xml template to post from xml data using xsl.
   $xslDoc = new DOMDocument();
-  $xslDoc->load(__DIR__ . "/drupal-dspace.xsl");
+  $xslDoc->load(__DIR__ . "/xsl/drupal-" . strtolower($oai_pmh) . ".xsl");
   $i = 0;
   foreach ($harvested_files as $oai_dc) {
     $xmlDoc = new DOMDocument();
@@ -106,7 +106,7 @@ foreach ($oai_pmh_list as $oai_pmh) {
       $curl = curl_init();
 
       curl_setopt_array($curl, array(
-        CURLOPT_URL => "$nvli_drupal_host/entity/solr_annotation?_format=xml",
+        CURLOPT_URL => "$nvli_drupal_host/entity/nvli_resource_entity?_format=xml",
         CURLOPT_RETURNTRANSFER => TRUE,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
