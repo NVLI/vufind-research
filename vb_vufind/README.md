@@ -42,7 +42,8 @@ Whenever harvesting process is done and before processing indexing, need to run 
 * `./solr.sh start`
 * `cd /usr/local/vufind/harvest`
 * `sh batch-import-xsl.sh ./DSpace ../import/dspace.properties`
-* `vb_rest_api/add_annotation_solr.php`
+* `../solr.sh restart`
+* `php vb_rest_api/add_annotation_solr.php`
 
 #### About internal log file
 We maintain a log file named 'drupal-harvest-export.log' to keep track for which all harvested xml we had created entity in Drupal backend. This log file can be found in corresponding harvest directory, for example if DSpace then location will be `/usr/local/vufind/local/harvest/DSpace/drupal-harvest-export.log`.
