@@ -35,9 +35,13 @@ Whenever harvesting process is done and before processing indexing, need to run 
 * `php harvest_oai.php`
 * `php vb_rest_api/import-drupal-xsl.php`
 
-#### Indexing annotation workflow
-When indexing is over we need to run the following commands:
+#### Re - Indexing annotation workflow
+* `cd /usr/local/vufind`
+* `./solr.sh stop`
+* `rm -rf solr/vufind/biblio/index solr/vufind/biblio/spell*`
+* `./solr.sh start`
 * `cd /usr/local/vufind/harvest`
+* `sh batch-import-xsl.sh ./DSpace ../import/dspace.properties`
 * `vb_rest_api/add_annotation_solr.php`
 
 #### About internal log file
