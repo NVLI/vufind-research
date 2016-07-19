@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\annotation_store;
+namespace Drupal\nvli_annotation_services;
 
 use Symfony\Component\EventDispatcher\Event;
 
