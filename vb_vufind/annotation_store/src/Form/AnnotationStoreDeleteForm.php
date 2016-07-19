@@ -3,6 +3,7 @@
 
 namespace Drupal\annotation_store\Form;
 
+use Drupal\annotation_store\AnnotationStoreEvent;
 use Drupal\Core\Entity\ContentEntityConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -44,6 +45,7 @@ class AnnotationStoreDeleteForm extends ContentEntityConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $entity = $this->getEntity();
+    $resource_ref = $entity->get('resource_ref')->getValue()[0]['value'];
     $entity->delete();
 
     \Drupal::logger('annotation_store')->notice('@type: deleted %title.',
@@ -52,6 +54,11 @@ class AnnotationStoreDeleteForm extends ContentEntityConfirmFormBase {
         '%title' => $this->entity->label(),
       ));
     $form_state->setRedirect('entity.annotation_store_entity.collection');
+
+    // Dispatching annotation store delete event.
+    $dispatcher = \Drupal::service('event_dispatcher');
+    $event = new AnnotationStoreEvent($resource_ref);
+    $dispatcher->dispatch(AnnotationStoreEvent::DELETE, $event);
   }
 
 }
