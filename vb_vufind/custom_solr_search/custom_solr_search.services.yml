@@ -9,3 +9,7 @@ services:
   custom_solr_search.search_all:
     class: Drupal\custom_solr_search\SearchSolrAll
     arguments: []
+  custom_solr_search.facet:
+    class: Drupal\custom_solr_search\Facet
+    arguments: []
+

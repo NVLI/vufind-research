@@ -30,6 +30,10 @@ class BasicSearch extends ControllerBase {
     $render['form'] = $this->formBuilder()->getForm('Drupal\custom_solr_search\Form\SearchForm', $server, $keyword);
     // Display result if keyword is defined.
     if (!empty($keyword)) {
+      $url_components = custom_solr_search_get_url_components();
+      foreach ($url_components['facet_query'] as $filter) {
+        $keyword .= ' AND ' . urldecode($filter);
+      }
       // Get search results from solr core.
       if ($server == 'all') {
         $results = \Drupal::service('custom_solr_search.search_all')->seachAll($keyword);

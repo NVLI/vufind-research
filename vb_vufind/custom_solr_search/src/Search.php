@@ -50,7 +50,6 @@ class Search {
     $response = $solr_client->executeRequest($request);
     // Extract result from response.
     $result = $this->extractResult($response);
-
     return $result;
   }
 
