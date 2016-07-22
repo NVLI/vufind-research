@@ -55,3 +55,14 @@ nvli_resource.nvli_resource_entity_settings:
     _title: 'NVLI Resource Settings'
   requirements:
     _permission: 'administer nvli resource entity'
+
+nvli_resource.aws_credential_form:
+  path: '/admin/config/nvli_resource/awscredential'
+  defaults:
+    _form: '\Drupal\nvli_resource\Form\AwsCredentialForm'
+    _title: 'AwsCredentialForm'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
+
