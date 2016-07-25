@@ -19,6 +19,9 @@
             <type>
               <value>ojs</value>
             </type>
+            <format>
+              <value>Online</value>
+            </format>
         </request>
     </xsl:template>
 </xsl:stylesheet>
