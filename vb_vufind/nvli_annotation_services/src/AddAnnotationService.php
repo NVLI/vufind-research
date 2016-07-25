@@ -22,23 +22,23 @@ class AddAnnotationService implements AddAnnotationServiceInterface {
   public function addAnnotation($server, $id, $fields) {
     $backend_config = \Drupal::config('search_api.server.' . $server)
       ->get('backend_config');
-    $old_doc = \Drupal::service('custom_solr_search.search')
-      ->basicSearch('id:' . $id, 0, 1, $server);
-    $addFields = array();
-    $diff = array();
-    foreach ($fields as $key => $value) {
-      if(!empty($old_doc[0]->$key)){
-        $diff = array_diff($value, $old_doc[0]->$key);
-        if ($diff) {
-          $addFields[$key] = $diff;
-        }
-      }else{
-        $addFields[$key] = $value;
-      }
-    }
-    if(empty($addFields)){
-      return '';
-    }
+//    $old_doc = \Drupal::service('custom_solr_search.search')
+//      ->basicSearch('id:' . $id, 0, 1, $server);
+//    $addFields = array();
+//    $diff = array();
+//    foreach ($fields as $key => $value) {
+//      if(!empty($old_doc[0]->$key)){
+//        $diff = array_diff($value, $old_doc[0]->$key);
+//        if ($diff) {
+//          $addFields[$key] = $diff;
+//        }
+//      }else{
+//        $addFields[$key] = $value;
+//      }
+//    }
+//    if(empty($addFields)){
+//      return '';
+//    }
     $client = new Client();
     $client->createEndpoint($backend_config + ['key' => 'core'], TRUE);
     // get an update query instance
@@ -47,8 +47,8 @@ class AddAnnotationService implements AddAnnotationServiceInterface {
     $doc = $update->createDocument();
     $doc->setKey('id');
     $doc->setField('id', $id);
-    foreach ($addFields as $key => $field) {
-      $doc->setField($key, $field, NULL, 'add');
+    foreach ($fields as $key => $field) {
+      $doc->setField($key, $field, NULL, 'set');
     }
     $update->addDocuments(array($doc));
     $update->addCommit(TRUE);

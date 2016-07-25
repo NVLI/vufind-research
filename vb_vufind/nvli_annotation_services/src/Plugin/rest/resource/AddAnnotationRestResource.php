@@ -111,6 +111,7 @@ class AddAnnotationRestResource extends ResourceBase {
         ->fields('ae', array('id'));
        $query->condition('resource_ref', $reccord->id);
       $data = $query->execute()->fetchAll();
+      $value = array();
       foreach ($data as $val){
         $value[] = $val->id;
       }
