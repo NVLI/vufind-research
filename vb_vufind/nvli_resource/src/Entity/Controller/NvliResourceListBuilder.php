@@ -44,6 +44,7 @@ class NvliResourceListBuilder extends EntityListBuilder {
     $header['title'] = $this->t('Title');
     $header['solr_doc_id'] = $this->t('Solr index doc ID');
     $header['type'] = $this->t('Type');
+    $header['format'] = $this->t('Format');
     return $header + parent::buildHeader();
   }
 
@@ -57,6 +58,7 @@ class NvliResourceListBuilder extends EntityListBuilder {
     $row['title'] = $entity->title->value;
     $row['solr_doc_id'] = $entity->solr_doc_id->value;
     $row['type'] = $entity->type->value;
+    $row['format'] = $entity->format->value;
     return $row + parent::buildRow($entity);
   }
 

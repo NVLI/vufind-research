@@ -31,9 +31,10 @@ class AnnotationEventSubscriber implements EventSubscriberInterface {
 
     $id = $event->getReferenceSolrDocId();
     $fields = $this->getAnnotationFields($id);
-    $server = 'solr';
+    $solrDocId = $this->getSolrDocId($id);
+    $server = $event->getSolrServerId();
     $results = \Drupal::service('nvli_annotation_services.add_annotation')
-      ->addAnnotation($server, $id, $fields);
+      ->addAnnotation($server, $solrDocId, $fields);
 
     if($results->getResponse()->getStatusMessage() == 'OK'){
       drupal_set_message("Saved annotation for solr doc:" . $event->getReferenceSolrDocId());
@@ -63,5 +64,10 @@ class AnnotationEventSubscriber implements EventSubscriberInterface {
       $fields['annotation_type_txt_mv'][] = $entity->type->value;
     }
     return $fields;
+  }
+  protected function getSolrDocId($id){
+    $data = \Drupal::entityTypeManager()->getStorage('nvli_resource_entity')->load($id);
+    $solrDocId = $data->get('solr_doc_id')->value;
+    return $solrDocId;
   }
 }
