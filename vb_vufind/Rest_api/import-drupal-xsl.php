@@ -118,7 +118,7 @@ foreach ($oai_pmh_list as $oai_pmh) {
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => $input_xml,
         CURLOPT_HTTPHEADER => array(
-          "authorization: Basic YWRtaW46YWRtaW4=",
+          "authorization: Basic YWRtaW46cGFzc3dvcmQ=",
           "cache-control: no-cache",
           "content-type: application/xml",
           "x-csrf-token: $x_csrf_token"
