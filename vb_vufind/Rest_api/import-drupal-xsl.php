@@ -102,7 +102,7 @@ foreach ($oai_pmh_list as $oai_pmh) {
     $proc = new XSLTProcessor();
     $proc->importStylesheet($xslDoc);
     $input_xml = $proc->transformToXml($xmlDoc);
-    $cur_solr_doc_id = (array) simplexml_load_string($input_xml)->solr_doc_id->value;
+    $cur_solr_doc_id = (array) simplexml_load_string($input_xml)->field_solr_docid->value;
 
     if (!in_array($cur_solr_doc_id[0], $processed_ids)) {
       // Post it using curl.
