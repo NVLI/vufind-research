@@ -17,14 +17,14 @@
                     <xsl:value-of select="//dc:title[normalize-space()]"/>
                 </value>
             </title>
-            <field_term_ref_harvest_type>
+            <field_harvest_type>
               <value>dspace</value>
-            </field_term_ref_harvest_type>
-            <field_term_ref_resource_type>
+            </field_harvest_type>
+            <field_resource_type>
               <value>
                 <xsl:value-of select="//dc:type" />
               </value>
-            </field_term_ref_resource_type>
+            </field_resource_type>
         </request>
     </xsl:template>
 </xsl:stylesheet>
