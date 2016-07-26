@@ -6,7 +6,7 @@
 
 $vufind_home = getenv('VUFIND_HOME');
 $oai_ini_path = $vufind_home . '/harvest/oai.ini';
-$nvli_drupal_host = 'http://188.166.216.52/d8';
+$nvli_drupal_host = 'http://dev-nvli.iitb.ac.in';
 $vufind_local_dir = getenv('VUFIND_LOCAL_DIR');
 
 // Load oai.ini
@@ -78,8 +78,8 @@ foreach ($oai_pmh_list as $oai_pmh) {
     $file = fopen($oai_pmh_dir . '/drupal-harvest-export.log', 'a+');
     $processed_ids = array();
     foreach ($response  as $item) {
-      $processed_ids[] = $item->solr_doc_id;
-      fputs($file, $item->solr_doc_id . PHP_EOL);
+      $processed_ids[] = $item->field_solr_docid;
+      fputs($file, $item->field_solr_docid . PHP_EOL);
     }
   }
   else {
@@ -90,6 +90,9 @@ foreach ($oai_pmh_list as $oai_pmh) {
 
   // Get xml template to post from xml data using xsl.
   $xslDoc = new DOMDocument();
+  if (!file_exists(__DIR__ . "/xsl/drupal-" . strtolower($oai_pmh) . ".xsl")) {
+    continue;
+  }
   $xslDoc->load(__DIR__ . "/xsl/drupal-" . strtolower($oai_pmh) . ".xsl");
   $i = 0;
   foreach ($harvested_files as $oai_dc) {
@@ -106,7 +109,7 @@ foreach ($oai_pmh_list as $oai_pmh) {
       $curl = curl_init();
 
       curl_setopt_array($curl, array(
-        CURLOPT_URL => "$nvli_drupal_host/entity/nvli_resource_entity?_format=xml",
+        CURLOPT_URL => "$nvli_drupal_host/entity/node?_format=xml",
         CURLOPT_RETURNTRANSFER => TRUE,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,

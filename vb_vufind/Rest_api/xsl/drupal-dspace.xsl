@@ -6,24 +6,25 @@
     <xsl:output method="xml" indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
     <xsl:template match="oai_dc:dc">
         <request>
-            <solr_doc_id>
+            <type>resource</type>
+            <field_solr_docid>
                 <value>
                     <xsl:value-of select="//identifier"/>
                 </value>
-            </solr_doc_id>
+            </field_solr_docid>
             <title>
                 <value>
                     <xsl:value-of select="//dc:title[normalize-space()]"/>
                 </value>
             </title>
-            <type>
+            <field_term_ref_harvest_type>
               <value>dspace</value>
-            </type>
-            <format>
+            </field_term_ref_harvest_type>
+            <field_term_ref_resource_type>
               <value>
                 <xsl:value-of select="//dc:type" />
               </value>
-            </format>
+            </field_term_ref_resource_type>
         </request>
     </xsl:template>
 </xsl:stylesheet>
