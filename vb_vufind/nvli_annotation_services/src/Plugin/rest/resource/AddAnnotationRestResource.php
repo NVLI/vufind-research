@@ -99,7 +99,7 @@ class AddAnnotationRestResource extends ResourceBase {
     $query = $connection->select('node', 'n');
       $query->join('node__field_solr_docid', 'sid', 'n.nid=sid.entity_id');
       $query->fields('n', array('nid'));
-      $query->fields('sid', array('field_field_solr_docid_value'));
+      $query->fields('sid', array('field_solr_docid_value'));
       $query->range($offset, $limit);
     $reccords = $query->execute()->fetchAll();
 
