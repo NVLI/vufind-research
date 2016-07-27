@@ -96,20 +96,22 @@ class AddAnnotationRestResource extends ResourceBase {
   protected function load_entity_range($offset, $limit) {
     $connection = Database::getConnection();
 
-    $query = $connection->select('nvli_resource_entity', 'nr')
-      ->fields('nr', array('id', 'solr_doc_id'))
-      ->range($offset, $limit);
+    $query = $connection->select('node', 'n');
+      $query->join('node__field_solr_doc_id', 'sid', 'n.nid=sid.entity_id');
+      $query->fields('n', array('nid'));
+      $query->fields('sid', array('field_solr_doc_id_value'));
+      $query->range($offset, $limit);
     $reccords = $query->execute()->fetchAll();
 
     $success = $fail = $exist = 0;
     $message = '';
     foreach ($reccords as $reccord){
       $server = 'solr';//isset($entity->get('server')->value)?$entity->get('server')->value: 'solr';
-      $id = $reccord->solr_doc_id;
+      $id = $reccord->field_solr_doc_id_value;
       $fields = array();
       $query = $connection->select('annotation_store_entity', 'ae')
         ->fields('ae', array('id'));
-       $query->condition('resource_ref', $reccord->id);
+       $query->condition('resource_ref', $reccord->nid);
       $data = $query->execute()->fetchAll();
       $value = array();
       foreach ($data as $val){
@@ -133,14 +135,11 @@ class AddAnnotationRestResource extends ResourceBase {
       if ($message == 'OK') {
         $success++;
       }
-      elseif (empty($results)) {
-        $exist++;
-      }
       else {
         $fail++;
       }
     }
 
-    return array('success' => $success, 'fail' => $fail, 'exist' => $exist);
+    return array('success' => $success, 'fail' => $fail);
   }
 }
