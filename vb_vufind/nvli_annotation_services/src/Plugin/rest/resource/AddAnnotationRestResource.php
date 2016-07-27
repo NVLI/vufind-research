@@ -97,16 +97,16 @@ class AddAnnotationRestResource extends ResourceBase {
     $connection = Database::getConnection();
 
     $query = $connection->select('node', 'n');
-      $query->join('node__field_solr_doc_id', 'sid', 'n.nid=sid.entity_id');
+      $query->join('node__field_solr_docid', 'sid', 'n.nid=sid.entity_id');
       $query->fields('n', array('nid'));
-      $query->fields('sid', array('field_solr_doc_id_value'));
+      $query->fields('sid', array('field_field_solr_docid_value'));
       $query->range($offset, $limit);
     $reccords = $query->execute()->fetchAll();
 
     $success = $fail = $exist = 0;
     $message = '';
     foreach ($reccords as $reccord){
-      $server = 'solr';//isset($entity->get('server')->value)?$entity->get('server')->value: 'solr';
+      $server = 'nvli';//isset($entity->get('server')->value)?$entity->get('server')->value: 'solr';
       $id = $reccord->field_solr_doc_id_value;
       $fields = array();
       $query = $connection->select('annotation_store_entity', 'ae')

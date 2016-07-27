@@ -31,7 +31,7 @@ class AnnotationEventSubscriber implements EventSubscriberInterface {
 
     $id = $event->getReferenceSolrDocId();
     $fields = $this->getAnnotationFields($id);
-    $server = 'solr';
+    $server = 'nvli';
     $results = \Drupal::service('nvli_annotation_services.add_annotation')
       ->addAnnotation($server, $id, $fields);
 
