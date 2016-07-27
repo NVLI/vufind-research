@@ -107,7 +107,7 @@ class AddAnnotationRestResource extends ResourceBase {
     $message = '';
     foreach ($reccords as $reccord){
       $server = 'nvli';//isset($entity->get('server')->value)?$entity->get('server')->value: 'solr';
-      $id = $reccord->field_solr_doc_id_value;
+      $id = $reccord->field_solr_docid_value;
       $fields = array();
       $query = $connection->select('annotation_store_entity', 'ae')
         ->fields('ae', array('id'));
