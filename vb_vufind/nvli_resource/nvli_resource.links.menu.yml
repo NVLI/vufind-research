@@ -10,3 +10,10 @@ nvli_resource_entity.admin.structure.settings:
   description: 'Configure NVLI Resource entity'
   route_name:  nvli_resource.nvli_resource_entity_settings
   parent: system.admin_structure
+nvli_resource.aws_credential_form:
+  title: 'AwsCredentialForm'
+  route_name: nvli_resource.aws_credential_form
+  description: 'Config for providing AWS crediential.'
+  parent: system.admin_config_system
+  weight: 99
+
