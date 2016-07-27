@@ -2,10 +2,10 @@
 
 namespace Drupal\annotation_store\Form;
 
-use Drupal\annotation_store\AnnotationStoreEvent;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\nvli_annotation_services\AnnotationStoreEvent;
 
 /**
  * Form controller for the annotation_store entity edit forms.
@@ -38,10 +38,10 @@ class AnnotationStoreForm extends ContentEntityForm {
     $form_state->setRedirect('entity.annotation_store_entity.collection');
     $entity = $this->getEntity();
     $entity->save();
-
+    $solrServerId = 'solr';
     // Dispatching annotation store save event.
     $dispatcher = \Drupal::service('event_dispatcher');
-    $event = new AnnotationStoreEvent($form_state->getValue('resource_ref'));
+    $event = new AnnotationStoreEvent($form_state->getValue('resource_ref')[0]['value'], $solrServerId);
     $dispatcher->dispatch(AnnotationStoreEvent::SAVE, $event);
   }
 }

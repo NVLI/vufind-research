@@ -86,8 +86,7 @@ class AnnotationCountRestResource extends ResourceBase {
       throw new AccessDeniedHttpException();
     }
     $entities = \Drupal::entityTypeManager()
-      ->getStorage('nvli_resource_entity')
-      ->loadMultiple();
+      ->getStorage('node')->loadByProperties(array('type' => 'resource'));
     $count = count($entities);
     return new ResourceResponse($count);
   }
