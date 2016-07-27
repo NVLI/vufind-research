@@ -46,6 +46,13 @@
                 <type>
                   <value>vudl_foxml</value>
                 </type>
+                <xsl:for-each select="$DC//dc:format">
+                    <format>
+                      <value>
+                        <xsl:value-of select="."/>
+                      </value>
+                    </format>
+                </xsl:for-each>
             </request>
     </xsl:template>
 

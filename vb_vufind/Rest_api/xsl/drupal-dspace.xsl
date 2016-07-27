@@ -16,6 +16,14 @@
                     <xsl:value-of select="//dc:title[normalize-space()]"/>
                 </value>
             </title>
+            <type>
+              <value>dspace</value>
+            </type>
+            <format>
+              <value>
+                <xsl:value-of select="//dc:type" />
+              </value>
+            </format>
         </request>
     </xsl:template>
 </xsl:stylesheet>

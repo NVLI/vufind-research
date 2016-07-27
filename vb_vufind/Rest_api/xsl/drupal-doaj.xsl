@@ -18,6 +18,9 @@
           <type>
             <value>doaj</value>
           </type>
+          <format>
+            <value>Article</value>
+          </format>
         </request>
     </xsl:template>
 </xsl:stylesheet>

@@ -19,6 +19,9 @@
             <type>
               <value>gsdl</value>
             </type>
+            <format>
+              <value>eResources</value>
+            </format>
         </request>
     </xsl:template>
 </xsl:stylesheet>
