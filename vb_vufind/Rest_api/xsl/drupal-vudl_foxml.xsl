@@ -28,16 +28,17 @@
         <xsl:variable name="RELS-EXT" select="document(concat($fedoraURL, ':', $fedoraPort, '/fedora/objects/', $PID, '/datastreams/RELS-EXT/content'))"/>
         <!-- <xsl:variable name="modelType" select="substring-after($RELS-EXT//fedora-model:hasModel[last()]/@rdf:resource, 'info:fedora/')"/> -->
         <!--
-        <xsl:variable name="objectInfo" select="document(concat($fedoraURL, '/fedora/objects/', $PID, '?format=xml'))"/>
+        <xsl:variable name="objectInfo" select="document(concat($fedoraURL, '/fedora/objects/', $PID, '?field_resource_type=xml'))"/>
         -->
         <!-- -->
-        <xsl:variable name="listDatastreams" select="document(concat($fedoraURL, ':', $fedoraPort, '/fedora/objects/', $PID, '/datastreams?format=xml'))"/>
+        <xsl:variable name="listDatastreams" select="document(concat($fedoraURL, ':', $fedoraPort, '/fedora/objects/', $PID, '/datastreams?field_resource_type=xml'))"/>
             <request>
-                <solr_doc_id>
+                <type>resource</type>
+                <field_solr_docid>
                     <value>
                         <xsl:value-of select="$PID"/>
                     </value>
-                </solr_doc_id>
+                </field_solr_docid>
                 <title>
                     <value>
                         <xsl:value-of select="$DC//dc:title[normalize-space()]"/>
@@ -46,12 +47,12 @@
                 <type>
                   <value>vudl_foxml</value>
                 </type>
-                <xsl:for-each select="$DC//dc:format">
-                    <format>
+                <xsl:for-each select="$DC//dc:field_resource_type">
+                    <field_resource_type>
                       <value>
                         <xsl:value-of select="."/>
                       </value>
-                    </format>
+                    </field_resource_type>
                 </xsl:for-each>
             </request>
     </xsl:template>
