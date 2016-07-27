@@ -5,22 +5,23 @@
     <xsl:output method="xml" indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
     <xsl:template match="doaj:record">
         <request>
-          <solr_doc_id>
+          <type>resource</type>
+          <field_solr_docid>
               <value>
                   <xsl:value-of select="//doaj:doajIdentifier"/>
               </value>
-          </solr_doc_id>
+          </field_solr_docid>
           <title>
               <value>
                   <xsl:value-of select="//doaj:title[normalize-space()]"/>
               </value>
           </title>
-          <type>
+          <field_harvest_type>
             <value>doaj</value>
-          </type>
-          <format>
+          </field_harvest_type>
+          <field_resource_type>
             <value>Article</value>
-          </format>
+          </field_resource_type>
         </request>
     </xsl:template>
 </xsl:stylesheet>

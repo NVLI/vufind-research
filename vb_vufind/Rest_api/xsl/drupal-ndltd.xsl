@@ -12,20 +12,21 @@
 
       <xsl:if test="contains($URLs, '://') or contains($URLs, 'urn:')">
           <request>
-              <solr_doc_id>
+              <type>resource</type>
+              <field_solr_docid>
                   <value>
                       <xsl:value-of select="//identifier"/>
                   </value>
-              </solr_doc_id>
+              </field_solr_docid>
               <title>
                   <value>
                       <xsl:value-of select="//dc:title[normalize-space()]"/>
                   </value>
               </title>
-              <type>
+              <field_harvest_type>
                 <value>ndltd</value>
-              </type>
-              <format>
+              </field_harvest_type>
+              <field_resource_type>
                 <value>
                   <xsl:choose>
                       <xsl:when test="contains(//dc:type, 'master')">
@@ -50,12 +51,12 @@
                       </xsl:when>
 
                       <xsl:otherwise>
-                        <xsl:value-of select="//dc:format"/>
+                        <xsl:value-of select="//dc:field_resource_type"/>
                       </xsl:otherwise>
 
                     </xsl:choose>
                 </value>
-              </format>
+              </field_resource_type>
           </request>
         </xsl:if>
      </xsl:if>

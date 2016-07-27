@@ -6,22 +6,23 @@
     <xsl:output method="xml" indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
     <xsl:template match="nlm:article">
         <request>
-            <solr_doc_id>
+            <type>resource</type>
+            <field_solr_docid>
                 <value>
                     <xsl:value-of select="nlm:identifier"/>
                 </value>
-            </solr_doc_id>
+            </field_solr_docid>
             <title>
                 <value>
                     <xsl:value-of select="//nlm:article-title[normalize-space()]"/>
                 </value>
             </title>
-            <type>
+            <field_harvest_type>
               <value>nlm_ojs</value>
-            </type>
-            <format>
+            </field_harvest_type>
+            <field_resource_type>
               <value>Online</value>
-            </format>
+            </field_resource_type>
         </request>
     </xsl:template>
 </xsl:stylesheet>
