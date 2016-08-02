@@ -47,12 +47,9 @@
                   <value>vudl_foxml</value>
                 </type>
                 <xsl:for-each select="$DC//dc:format">
-                    <format>
-                      <value>
-                        <xsl:value-of select="."/>
-                      </value>
-                    </format>
+                  <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', . )"/>
                 </xsl:for-each>
+
             </request>
     </xsl:template>
 

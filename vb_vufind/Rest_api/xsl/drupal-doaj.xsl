@@ -18,9 +18,7 @@
           <type>
             <value>doaj</value>
           </type>
-          <format>
-            <value>Article</value>
-          </format>
+          <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', 'Article' )"/>
         </request>
     </xsl:template>
 </xsl:stylesheet>

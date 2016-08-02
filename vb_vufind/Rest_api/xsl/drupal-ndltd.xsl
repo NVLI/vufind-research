@@ -25,37 +25,28 @@
               <type>
                 <value>ndltd</value>
               </type>
-              <format>
-                <value>
-                  <xsl:choose>
-                      <xsl:when test="contains(//dc:type, 'master')">
-                        Dissertation
-                      </xsl:when>
-                      <xsl:when test="contains(//dc:type, 'Master')">
-                        Dissertation
-                      </xsl:when>
-                      <xsl:when test="contains(//dc:type, 'doctor')">
-                        Doctoral Thesis
-                      </xsl:when>
-
-                      <xsl:when test="contains(//dc:type, 'Doctor')">
-                        Doctoral Thesis
-                      </xsl:when>
-
-                      <xsl:when test="contains(//dc:type, 'article')">
-                        Article
-                      </xsl:when>
-                      <xsl:when test="contains(//dc:type, 'artigo')">
-                        Article
-                      </xsl:when>
-
-                      <xsl:otherwise>
-                        <xsl:value-of select="//dc:format"/>
-                      </xsl:otherwise>
-
-                    </xsl:choose>
-                </value>
-              </format>
+            <xsl:choose>
+                <xsl:when test="contains(//dc:type, 'master')">
+                  <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', 'Dissertation' )"/>
+                </xsl:when>
+                <xsl:when test="contains(//dc:type, 'Master')">
+                  <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', 'Dissertation' )"/>
+                </xsl:when>
+                <xsl:when test="contains(//dc:type, 'doctor')">
+                </xsl:when>
+                <xsl:when test="contains(//dc:type, 'Doctor')">
+                  <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', 'Doctoral Thesis' )"/>
+                </xsl:when>
+                <xsl:when test="contains(//dc:type, 'article')">
+                  <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', 'Article' )"/>
+                </xsl:when>
+                <xsl:when test="contains(//dc:type, 'artigo')">
+                  <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', 'Article' )"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', //dc:format )"/>
+                </xsl:otherwise>
+              </xsl:choose>
           </request>
         </xsl:if>
      </xsl:if>

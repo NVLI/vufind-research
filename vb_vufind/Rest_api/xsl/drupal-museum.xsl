@@ -19,11 +19,7 @@
           <type>
             <value>museum</value>
           </type>
-          <format>
-            <value>
-              <xsl:value-of select="//dc:type" />
-            </value>
-          </format>
+          <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', //dc:type )"/>
       </request>
   </xsl:template>
 </xsl:stylesheet>

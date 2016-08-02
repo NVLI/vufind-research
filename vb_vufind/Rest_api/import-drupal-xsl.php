@@ -4,10 +4,34 @@
  * import-drupal-xsl.php.
  */
 
+// Function to dynamically return resource type for xml template.
+function getResourceType($dc_type) {
+  global $config_entity;
+  static $resource_type = array();
+
+  if (!empty($resource_type[$dc_type])) {
+    return $resource_type[$dc_type];
+  }
+
+  $tmp_resource_type = array();
+  foreach ($config_entity as $key => $value) {
+   if ($value == $dc_type) {
+      $tmp_resource_type[$dc_type][] = $key;
+   }
+  }
+  if (empty($tmp_resource_type[$dc_type])) {
+    $tmp_resource_type[$dc_type][] = $dc_type;
+  }
+  $resource_type[$dc_type] = '';
+  foreach ($tmp_resource_type[$dc_type] as $dc_res_type) {
+    $resource_type[$dc_type] .= '<format><value>' . $dc_res_type . '</value></format>';
+  }
+  return $resource_type[$dc_type];
+}
+
 $vufind_home = getenv('VUFIND_HOME');
 $oai_ini_path = $vufind_home . '/harvest/oai.ini';
-$http_password = 'admin:password@';
-$nvli_drupal_host = 'http://' . $http_password . 'dev-nvli.iitb.ac.in';
+$nvli_drupal_host = 'http://dev-nvli.iitb.ac.in';
 $vufind_local_dir = getenv('VUFIND_LOCAL_DIR');
 
 // Load oai.ini
@@ -16,7 +40,7 @@ if ($oai_settings) {
   $oai_pmh_list = array_keys($oai_settings);
 }
 else {
-  echo 'Getting `oai.ini` settings failed.'; exit;
+  echo 'Getting `oai.ini` settings failed.' . PHP_EOL; exit;
 }
 
 // To get X-CSRF-Token.
@@ -43,6 +67,36 @@ curl_close($curl);
 if ($err) {
   echo "cURL Error #:" . $err;
   exit;
+}
+
+// Get dev-nvli `Custom solr search filter query` config entity.
+global $config_entity;
+$curl = curl_init();
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "$nvli_drupal_host/custom-solr/config-entity?_format=xml",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "cache-control: no-cache",
+      "authorization: Basic YWRtaW46cGFzc3dvcmQ="
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+  exit;
+}
+else {
+  $config_entity = simplexml_load_string($response);
 }
 
 foreach ($oai_pmh_list as $oai_pmh) {
@@ -103,6 +157,7 @@ foreach ($oai_pmh_list as $oai_pmh) {
 
     $proc = new XSLTProcessor();
     $proc->importStylesheet($xslDoc);
+    $proc->registerPHPFunctions(array('getResourceType'));
     $input_xml = $proc->transformToXml($xmlDoc);
     $cur_solr_doc_id = (array) simplexml_load_string($input_xml)->field_solr_docid->value;
 

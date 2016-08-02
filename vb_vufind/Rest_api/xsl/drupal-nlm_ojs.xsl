@@ -19,9 +19,7 @@
             <type>
               <value>nlm_ojs</value>
             </type>
-            <format>
-              <value>Online</value>
-            </format>
+            <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', 'Online' )"/>
         </request>
     </xsl:template>
 </xsl:stylesheet>

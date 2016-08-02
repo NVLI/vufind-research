@@ -19,9 +19,7 @@
             <type>
               <value>gsdl</value>
             </type>
-            <format>
-              <value>eResources</value>
-            </format>
+            <xsl:value-of disable-output-escaping="yes" select="php:functionString('getResourceType', 'eResources' )"/>
         </request>
     </xsl:template>
 </xsl:stylesheet>
