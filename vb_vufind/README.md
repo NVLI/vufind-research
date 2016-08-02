@@ -29,13 +29,19 @@ These are the basic module we will need to be installed in Drupal 8 instance.
 ** Nvli Resource entity
 
 ### Create Drupal entity for harvested xml docs (Rest_api)
-#### Harvesting workflow
+#### Normal harvesting and indexing workflow
 Whenever harvesting process is done and before processing indexing, need to run this script. Including the harvesting process we need to run following commands:
 * `cd /usr/local/vufind/harvest`
 * `php harvest_oai.php`
 * `php vb_rest_api/import-drupal-xsl.php`
+* `sh batch-import-xsl.sh ./DSpace ../import/dspace.properties`
+* `../solr.sh restart`
+* `php vb_rest_api/add_annotation_solr.php`
 
 #### Re - Indexing annotation workflow
+* `cd /usr/local/vufind/harvest`
+* `php harvest_oai.php`
+* `php vb_rest_api/import-drupal-xsl.php`
 * `cd /usr/local/vufind`
 * `./solr.sh stop`
 * `rm -rf solr/vufind/biblio/index solr/vufind/biblio/spell*`
