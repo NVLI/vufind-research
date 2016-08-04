@@ -22,9 +22,14 @@
           </field_harvest_type>
           <field_resource_type>
             <value>
-              <xsl:value-of select="//dc:type" />
+              <xsl:value-of select="//dc:format" />
             </value>
           </field_resource_type>
+          <field_image_file_path>
+            <value>
+              <xsl:value-of select="//dc:identifier"/>
+            </value>
+          </field_image_file_path>
       </request>
   </xsl:template>
 </xsl:stylesheet>
