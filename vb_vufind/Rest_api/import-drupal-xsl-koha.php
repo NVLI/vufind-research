@@ -1,11 +1,11 @@
 <?php
 $vufind_home = getenv('VUFIND_HOME');
-$oai_ini_path = $vufind_home . '/harvest/oai.ini';
+//$oai_ini_path = $vufind_home . '/harvest/oai.ini';
 $nvli_drupal_host = 'http://dev-nvli.iitb.ac.in';
 $vufind_local_dir = getenv('VUFIND_LOCAL_DIR');
 
 
-$oai_pmh_list = array('kohaiitb');
+$oai_pmh_list = array('kohache', 'kohaiitb');
 // To get X-CSRF-Token.
 $curl = curl_init();
 
@@ -86,14 +86,12 @@ foreach ($oai_pmh_list as $oai_pmh) {
       foreach ($i_xml as $val) {
         if ((string) $i_xml->attributes()['tag'][0] == '952' && (string) $val->attributes()['code'] == 'p') {
           $cur_solr_doc_id = $i_xml->subfield[$i];
-          break;
         }
         $i++;
       }
       foreach ($i_xml as $val) {
         if ((string) $i_xml->attributes()['tag'][0] == '020' && (string) $val->attributes()['code'] == 'a') {
           $title = $i_xml->subfield[$j];
-          break;
         }
         $j++;
       }
@@ -108,10 +106,10 @@ foreach ($oai_pmh_list as $oai_pmh) {
                           <value>'.$title.'</value>
                         </title>
                         <field_harvest_type>
-                          <value>koha</value>
+                          <value>'.$oai_pmh.'</value>
                         </field_harvest_type>
                         <field_resource_type>
-                          <value>koha</value>
+                          <value>Book</value>
                         </field_resource_type>
                     </request>';
 
